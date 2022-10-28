@@ -37,7 +37,7 @@
       }
 
       if (!window.getCookie('spotTokenA')) {
-        window.location = '/api/login';
+        window.location = '/api/login?referrer=' + encodeURIComponent(window.location.href);
       }
 
     </script>

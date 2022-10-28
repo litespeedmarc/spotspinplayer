@@ -1,0 +1,23 @@
+Exercise,Intensity,Start At,Duration,SpotifyTrack,Song
+
+# THis is a sample mix.
+# Comments can be included with '#' at the start
+# Blank lines are ignored
+# Columns are:
+# Exercise: simply displayed
+# Intensity: simpliy displayed
+# Start At: Optional, if specified, will start the spotify track at the index specified
+#           should only be specified if track is specified.
+# Duration: Optional.  Duration of the exercise.
+#           If not specified, will be computed as follow:
+#           If track is specified, then will be length of the track.
+#           If track is NOT specified, then will be length of track specified above, minus
+#           any "exercise" played so far.
+#           This field is required whenever the next line does not have a track specified
+# SpotifyTrack: Optional.  The track id that the song refers to in Spotify
+#               If not specified, then it is assumed that this exercice is a continuation of previou.
+#               Only the id matters, formats recognized: *:<id> OR */<id> OR <id>
+# Song: A mneumonic for you when editing this file.  Not used.
+Warm-up,60,,,https://open.spotify.com/track/5A8EiAalFXq7TAofiSZ8bx,Some COVID blues song
+PUSH-HARD,70,61,24,https://open.spotify.com/track/2oDqmfa2g8W893LlwJG1qu,9IN
+Relax,80,19,,https://open.spotify.com/track/6Q32Vkucx2qeuVyBd3NiFZ,Kill Bill

@@ -5,22 +5,17 @@ var cookieParser = require('cookie-parser')
 
 const client_id = '2d4a2fe6204d464ba347a8c905298573';
 const client_secret = '50d9650b9e6c44bcbb3e81b65c638fb4';
-const PORT = 8081;
-const redirect_uri = `http://ssp.scibrazeau.ca/api/callback`;
+const PORT = process.env['PORT'] || 8081 ;
+const HTTP = process.env['HTTP'] || 'https';
+const HOST = process.env['HOST'] || 'ssp.scibrazeau.ca';
+const redirect_uri = process.env['CLIENT_PORT'] ?
+    `${HTTP}://${HOST}:${process.env['CLIENT_PORT']}/api/callback` :
+    `${HTTP}://${HOST}/api/callback`;
+
+const CLIENT_PORT = process.env['CLIENT_PORT'] || 'ssp.scibrazeau.ca';
 
 const SPOT_TOKENA_KEY = 'spotTokenA';
 const SPOT_TOKENR_KEY = 'spotTokenR';
-const SPOT_STATE_KEY = 'spotSession';
-
-function makeid(length) {
-    let result = '';
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    const charactersLength = characters.length;
-    for (let i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
-}
 
 const app = express();
 app.use(cookieParser())
@@ -34,16 +29,13 @@ app.use(cookieParser())
 app.get('/api/login', function (req, res) {
     // your application requests authorization
     const scope = 'ugc-image-upload ugc-image-upload user-read-playback-state user-read-playback-state app-remote-control app-remote-control user-modify-playback-state user-modify-playback-state playlist-read-private playlist-read-private user-follow-modify user-follow-modify playlist-read-collaborative playlist-read-collaborative user-follow-read user-follow-read user-read-currently-playing user-read-currently-playing user-read-playback-position user-read-playback-position user-library-modify user-library-modify playlist-modify-private playlist-modify-private playlist-modify-public playlist-modify-public user-read-email user-read-email user-top-read user-top-read streaming streaming user-read-recently-played user-read-recently-played user-read-private user-read-private user-library-read user-library-read'
-    const sessionId = makeid(16);
-    console.log(`Login request, redirecting to authorize, sessionId == ${sessionId}`);
-    res.cookie(SPOT_STATE_KEY, sessionId);
     res.redirect('https://accounts.spotify.com/authorize?' +
         querystring.stringify({
             response_type: 'code',
             client_id: client_id,
             scope: scope,
             redirect_uri: redirect_uri,
-            state: sessionId
+            state: req.query.referrer
         }));
 });
 
@@ -52,8 +44,7 @@ app.get('/api/callback', function (req, res) {
     // after checking the state parameter
     const code = req.query.code;
     const state = req.query.state;
-    const storedState = req.cookies && req.cookies[SPOT_STATE_KEY];
-    console.log(`Received callback code==${code}, state==${state}, storedState==${storedState}`);
+    console.log(`Received callback code==${code}, state==${state}`);
     const authOptions = {
         url: 'https://accounts.spotify.com/api/token',
         form: {
@@ -75,7 +66,7 @@ app.get('/api/callback', function (req, res) {
             console.log("Received token");
             res.cookie(SPOT_TOKENA_KEY, access_token);
             res.cookie(SPOT_TOKENR_KEY, refresh_token);
-            res.redirect('/index.html');
+            res.redirect(req.query.state);
         } else {
             console.error("Failed to retrieve access token");
             res.status(response.statusCode).send(error);

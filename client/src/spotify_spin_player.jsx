@@ -48,6 +48,9 @@ function updateBpmInfo(mix, track) {
 }
 
 function updateTrackInfo(mix, track) {
+    if (!track) {
+        return;
+    }
     for (let i = 0; i < mix.length; i++) {
         if (mix[i].track === track.id) {
             mix[i].title = track.name;
@@ -141,10 +144,15 @@ export function SpotifySpinPlayer(_props, _state) {
 
     const activeTimer = [];
 
-    const params = new Proxy(new URLSearchParams(window.location.search), {
-        get: (searchParams, prop) => searchParams.get(prop),
-    });
-    const mixCsv = params.mix; // "some_value"
+    const params = new URLSearchParams(window.location.search);
+    let mixCsv = params.get('mix');
+    if (!mixCsv) {
+        console.log("No mix specified, defaulting to 'default'");
+        window.location.search += "&mix=default";
+        return;
+    } else {
+        console.log("Mix is: " + mixCsv)
+    }
 
     if (mixCsv && !mix) {
         console.log("Fetching mix");
