@@ -12,6 +12,8 @@ const redirect_uri = process.env['CLIENT_PORT'] ?
     `${HTTP}://${HOST}:${process.env['CLIENT_PORT']}/api/callback` :
     `${HTTP}://${HOST}/api/callback`;
 
+console.log("Redirect uri will be " + redirect_uri);
+
 const CLIENT_PORT = process.env['CLIENT_PORT'] || 'ssp.scibrazeau.ca';
 
 const SPOT_TOKENA_KEY = 'spotTokenA';
