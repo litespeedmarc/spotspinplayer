@@ -14,11 +14,32 @@
     text-align: right;
 }
 
-.controls {
-    position: fixed;
-    background-color: white;
+
+
+div.controls {
+    position: sticky;
     display: flex;
-    align-items: center;
-    flex-direction: row;
-    width: 100%;
+    top: 0;
+    background-color: white;
+}
+
+div.controls div.main {
+    margin: 10px;
+    padding: 10px;
+    box-shadow: 0 0 5px black;
+    flex-grow: 1;
+    width: 100%
+}
+
+div.controls .PlayerRSWP {
+    width: 300px;
+    padding: 10px;
+    margin: 10px;
+    box-shadow: 0 0 5px black;
+}
+
+
+.times {
+    display: flex;
+    justify-content: space-between;
 }

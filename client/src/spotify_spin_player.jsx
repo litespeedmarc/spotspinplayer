@@ -150,8 +150,6 @@ export function SpotifySpinPlayer(_props, _state) {
         console.log("No mix specified, defaulting to 'default'");
         window.location.search += "&mix=default";
         return;
-    } else {
-        console.log("Mix is: " + mixCsv)
     }
 
     if (mixCsv && !mix) {
