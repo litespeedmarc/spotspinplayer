@@ -5,8 +5,8 @@ var cookieParser = require('cookie-parser')
 
 const client_id = '2d4a2fe6204d464ba347a8c905298573';
 const client_secret = '50d9650b9e6c44bcbb3e81b65c638fb4';
-const PORT = 3030;
-const redirect_uri = `http://localhost:3000/api/callback`;
+const PORT = 8081;
+const redirect_uri = `http://ssp.scibrazeau.ca/api/callback`;
 
 const SPOT_TOKENA_KEY = 'spotTokenA';
 const SPOT_TOKENR_KEY = 'spotTokenR';
@@ -118,7 +118,8 @@ app.get('/api/refresh_token', function (req, res) {
 });
 
 app.use('/api/static', express.static('static/'))
+app.use('/', express.static('spa/'))
 
-app.listen(PORT, () => {
+app.listen(PORT, '127.0.0.1', () => {
     console.log(`Example app listening on port ${PORT}`)
 })

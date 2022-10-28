@@ -197,7 +197,7 @@ export function SpotifySpinPlayer(_props, _state) {
             }
         }
         for (; i < mix.length; i++) {
-            if (progressMs < mix[i].trackEndAt || mix[i].track && mix[i].track !== trackId) {
+            if (progressMs < mix[i].trackEndAt || (mix[i].track && mix[i].track !== trackId) ) {
                 break;
             }
         }
