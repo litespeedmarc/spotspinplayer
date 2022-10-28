@@ -84,6 +84,10 @@ app.get('/api/callback', function (req, res) {
 });
 
 
+app.get('/api/hello', function (req, res) {
+    res.send('Hello back to you');
+})
+
 app.get('/api/refresh_token', function (req, res) {
     console.log("Generating refresh token");
 
