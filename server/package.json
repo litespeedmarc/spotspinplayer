@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "create-react-app": "^5.0.1",
+    "express": "^4.18.2",
+    "global": "^4.4.0",
+    "http-proxy-middleware": "^2.0.6",
+    "remove": "^0.1.5",
+    "request": "^2.88.2",
+    "yarn": "^1.22.19"
+  }
+}
